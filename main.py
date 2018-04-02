@@ -17,22 +17,18 @@ def setup():
 
 class task():
     def __init__(self,title ,discrip='',tasktime = datetime.now()):
-        self.title = title
+        self.title = title.lower()
         self.discrip = discrip
         self.date = tasktime
 
-class daytask():
+class daytask(record):
     def __init__(self):
         self.daytime = datetime.now()
-        self.tasks = []
     def addtask(self,newtask):
-        self.tasks = self.tasks + newtask
+        self.data[newtask.title] = newtask
     def show(self):
         # @todo: formatting of tasks printing
-        for item in self.tasks:
-            print item.title
-            print item.discrip
-            print '-----------'
+        
     def add(self,title,discrip='',tasktime = datetime.now()):
         self.addtask(task(title,discrip,tasktime))
 

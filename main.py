@@ -10,10 +10,13 @@ import sys
 import argparse
 from datetime import datetime
 
+
 def setup():
     dir_name = 'taskkeeper'
     if not os.path.isdir(os.exapnduser('~/'+ dir_name)):
         os.path.mkdir(os.expanduser('~/' + dir_name))
+
+
 
 
 class task():
@@ -104,7 +107,7 @@ class monthtask(daytask):
         # perday tasks
         self.perdaytask.show()
 
-class  year(monthtask):
+class  yeartask(monthtask):
     def __init__(self,taskortitle=None, discrip='',tasktime=None):
         self.instime = datetime.now()
         self.taskrecord = record()      # single task for complete month
@@ -128,6 +131,19 @@ class  year(monthtask):
         print("==============")
         # per month tasks
         self.permonthtask.show()
+
+class almanac():
+    def __init__(self,yeartask=None):
+        self.records = record()
+        if not yeartask is None:
+            self.add(yeartask)
+    def add(self):
+
+class datamanager():
+    def save(self):
+
+    def restore(self):
+     
 
 # if __name__=='__main__':
 #     parser = argparse.ArgumentParser(prog='task_keeper',usage='%(prog)s mode ')

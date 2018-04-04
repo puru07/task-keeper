@@ -17,9 +17,11 @@ def setup():
 
 
 class task():
-    def __init__(self,title ,discrip='',tasktime = datetime.now()):
+    def __init__(self,title ,discrip='',tasktime = None):
         self.title = title.lower()
         self.discrip = discrip
+        if tasktime is None:
+            tasktime = datetime.now()
         self.date = tasktime
 
     def show(self):
@@ -54,43 +56,78 @@ class record():
                 else:
                     rdata.show()
 
-class daytask(record):
-    def __init__(self):
+class daytask():
+    def __init__(self,taskortitle=None, discrip='',tasktime=None):
         self.instime = datetime.now()
-        self.data ={}
-    def addtask(self,newtask):
-        self[newtask.title] = newtask
+        self.taskrecord =record()
+        if not taskortitle is None:
+            self.add(taskortitle, discrip,tasktime)
 
-    def add(self,title,discrip='',tasktime = datetime.now()):
-        self.addtask(task(title,discrip,tasktime))
+    def add(self,taskortitle, discrip='',tasktime=None):
+        'generic add method'
+        self.addtask(taskortitle, discrip,tasktime)
 
-class month():
-    def __init__():
+    def addtask(self,newtask, discrip='',tasktime=None):
+        'add task obj'
+        if type(newtask) is str:
+            newtask = task(newtask,discrip,tasktime)
+        self.taskrecord[newtask.title] = newtask
+
+    # def addcreatetask(self,title,discrip='',tasktime = None):
+    #     'create and add task'
+    #     self.addtask(task(title,discrip,tasktime))
+
+class monthtask(daytask):
+    def __init__(self,taskortitle=None, discrip='',tasktime=None):
         self.instime = datetime.now()
-        self.monthtask = record()
-        self.perdaytask = record()
-    
-    def add(self,newtask):
-        if type(newtask) is daytask:
-            self.adddaytask(newtask)
-        else:
-            self.addtask(newtask)
-    
-    def addtask(self, newtask):
-        'task for the whole month'
-        self.monthtask[newtask.title] = newtask
-    
-    def adddaytask(self, daytask):
+        self.taskrecord = record()   # single task for complete month
+        self.perdaytask = record()  # tasks for each day
+        
+        if not taskortitle is None:
+            self.add(taskortitle, discrip,tasktime)
+
+    def add(self,taskortitle, discrip='',tasktime=None):
+        'generic add method'
+        if type(taskortitle) is daytask:
+            self.adddaytask(taskortitle)
+        else :
+            self.addtask(taskortitle, discrip,tasktime)
+
+    def adddaytask(self, newtask):
         'task for each day'
-        self.perdaytask[daytask.instime.day] = daytask
+        self.perdaytask[newtask.instime.day] = newtask
 
     def show(self):
         # whole month tasks
-        self.monthtask.show()
+        self.taskrecord.show()
         print("==============")
+        # perday tasks
         self.perdaytask.show()
 
+class  year(monthtask):
+    def __init__(self,taskortitle=None, discrip='',tasktime=None):
+        self.instime = datetime.now()
+        self.taskrecord = record()      # single task for complete month
+        self.permonthtask = record()    # tasks for each month
+        
+        if not taskortitle is None:
+            self.add(taskortitle, discrip,tasktime)
 
+    def add(self,taskortitle, discrip='',tasktime=None):
+        'generic add month'
+        if type(taskortitle) is monthtask:
+            self.addmonthtask(taskortitle)
+        else:
+            self.addtask(taskortitle, discrip,tasktime)
+    def addmonthtask(self,newtask):
+        self.permonthtask[newtask.instime.month] = newtask
+    
+    def show(self):
+        # whole year tasks
+        self.taskrecord.show()
+        print("==============")
+        # per month tasks
+        self.permonthtask.show()
 
 # if __name__=='__main__':
 #     parser = argparse.ArgumentParser(prog='task_keeper',usage='%(prog)s mode ')

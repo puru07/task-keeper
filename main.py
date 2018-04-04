@@ -73,9 +73,9 @@ class daytask():
             newtask = task(newtask,discrip,tasktime)
         self.taskrecord[newtask.title] = newtask
 
-    # def addcreatetask(self,title,discrip='',tasktime = None):
-    #     'create and add task'
-    #     self.addtask(task(title,discrip,tasktime))
+    def show(self):
+        self.taskrecord.show()
+
 
 class monthtask(daytask):
     def __init__(self,taskortitle=None, discrip='',tasktime=None):

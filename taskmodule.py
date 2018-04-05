@@ -121,3 +121,16 @@ class  yeartask(monthtask):
         print("==============")
         # per month tasks
         self.permonthtask.show()
+
+class almanac():
+    'the diary'
+    def __init__(self,taskortitle=None, discrip='',tasktime=None):
+        self.records = record()
+        if not taskortitle is None:
+            self.add(taskortitle)
+
+    def add(self,newtask, discrip='',tasktime=None):
+        self.records[task(yeartask(monthtask(daytask(newtask, discrip='',tasktime=None))))] = newtask
+
+    def show(self):
+        self.records.show()

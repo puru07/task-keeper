@@ -17,12 +17,6 @@ def setup():
     if not os.path.isdir(os.exapnduser('~/'+ dir_name)):
         os.path.mkdir(os.expanduser('~/' + dir_name))
 
-class almanac():
-    def __init__(self,yeartask=None):
-        self.records = record()
-        if not yeartask is None:
-            self.add(yeartask)
-
 
 class datamng():
     def __init__(self, name=None):
@@ -34,6 +28,8 @@ class datamng():
             pickle.dump(data, dataobj)
 
     def restore(self):
+        if not os.path.isfile(self.name):
+            return None
         with open(self.name,'rb') as dataobj:
             return pickle.load(dataobj)
 
@@ -44,4 +40,4 @@ def main():
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(prog='task_keeper',usage='%(prog)s action [data]')
-
+    

@@ -16,6 +16,7 @@ def setup():
     dir_name = 'taskkeeper'
     if not os.path.isdir(os.exapnduser('~/'+ dir_name)):
         os.path.mkdir(os.expanduser('~/' + dir_name))
+    
 
 
 class datamng():
@@ -35,7 +36,7 @@ class datamng():
 
 def main():
     dmanage = datamng()
-    p = [123,984]
+    alm = alamanac()
     dmanage.save(p)
 
 if __name__=='__main__':

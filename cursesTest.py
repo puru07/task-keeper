@@ -9,12 +9,15 @@ def main1(stdscr):
 
     # This raises ZeroDivisionError when i == 10.
     stdscr.addstr(1, 0, 'Counter is above')
-    for i in range(0, 10):
-        stdscr.addstr(0, 0, '#' * i)
-        stdscr.addstr(0, i, '>')
-        if i == 9:
-            stdscr.addstr(2, 0, 'Counter has finished')
-        stdscr.refresh()
+    for i in range(0, 1000):
+        try:
+            stdscr.addstr(i, 0, str(i))
+            stdscr.addstr(0, i, '>')
+            if i == 9:
+                stdscr.addstr(2, 0, 'Counter has finished')
+            stdscr.refresh()
+        except curses.error:
+            pass
         time.sleep(0.1)
         #stdscr.getkey()
 
